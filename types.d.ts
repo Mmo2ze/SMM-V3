@@ -32,3 +32,21 @@ export type Service = {
     refill: boolean;
     droprate: string;
 }
+
+
+export type inputR={
+    name :string,
+    email : string ,
+    password : string ,
+    rePassword : string,
+}
+
+export type registerR={
+    status : boolean,
+    error : string
+}
+export type loginR = {
+    isFound:boolean,
+    passIsCorrect:boolean
+}
+
