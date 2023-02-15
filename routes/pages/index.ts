@@ -6,6 +6,7 @@ import db from './../../database/models'
 import { isLogin } from './../../middlewares/middlewares'
 import bcrypt from 'bcryptjs'
 import { verify } from 'crypto'
+import axios from 'axios'
 const JsBarcode = require('jsbarcode');
 
 const index = express.Router();
@@ -46,26 +47,13 @@ type status = {
     pass: string
 }
 index.post('/register', async (req: any, res: any) => {
-    console.log(req.body)
     var registerR: registerR = (await checkInput(req.body))
-    console.log(registerR)
-    if (registerR.status) {
-        if (req.body.code == req.session.user.regist.verifyCode) {
-            req.session.isLogin = true;
-            var hashedPassword: string = await bcrypt.hash(req.body.password, 10);
-            db.User.create({
-                name: req.body.name,
-                email: req.body.email,
-                password: hashedPassword
-            })
-            req.session.isLogin = true;
-            delete req.session.user;
-            req.session.user = { name: req.body.name, email: req.body.email }
-            res.redirect('/')
-        } else { res.render('register', { msg: 'verify code is wrong' }) }
-    }
-    else {
-        res.render('register', { msg: registerR.error })
+    if(registerR.status ){
+        let responseMsg = await axios.post('http://localhost:8000/api/sendcode', { email: req.body.email, admin: process.env.adminKey, subject: 'verifyCode' })
+        console.log(responseMsg.data)
+        res.render('getcode.ejs',{email:req.body.email})
+    }else{
+        res.render('register.ejs',{msg: registerR.error})
     }
 })
 index.use(isLogin)

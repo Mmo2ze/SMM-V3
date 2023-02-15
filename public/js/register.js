@@ -52,6 +52,9 @@ const checkPass = async () => {
         errormsg.style.color = 'red';
     } else{ errormsg.innerHTML = "" }
 }
+// const reFresh = ()=>{
+
+// }
 const checkRepass = async () => {
     pass = document.getElementById("password").value;
     repass = document.getElementById("rePassword").value;
