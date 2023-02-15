@@ -7,6 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <script src="socket.io/socket.io.js"> </script>
   <link rel="stylesheet" href="/public/css/style.css" />
+  <link rel="stylesheet" href="/public/css/loading.css">
   <title>Register</title>
 </head>
 
@@ -26,31 +27,26 @@
           <%=msg%>
         </h2>
         <p id="nameMsg" class="nameMsg"></p>
-        <input type="text" onkeyup="checkValidateName()" id="name" class="fadeIn second" name="name" placeholder="name"
-          required />
+        <input type="text" onkeyup="checkValidateName()" id="name" class="fadeIn second" name="name" placeholder="name"/>
         <p id="emailMsg"> </p>
         <input type="email" onkeyup="checkValidateEmail()" id="email" class="fadeIn third" name="email"
-          placeholder="email" required />
+          placeholder="email"  />
         <p id="passwordMsg"></p>
         <input type="password" onkeyup="checkPass()" id="password" class="fadeIn third" name="password"
-          placeholder="password" required />
+          placeholder="password"  />
         <p id="rePasswordMsg"></p>
         <input type="password" onkeyup="checkRepass()" id="rePassword" class="fadeIn third" name="rePassword"
-        placeholder="rePassword" required />
-        
-        <div id ="codeinput" style="display:none">
-          <input type="number"fadeIn third" placeholder="4-diget code" name="code">
-        </div>
-        <p id ="Timer"></p>
-        <button id ="verifyButton" type="button" onclick="sendCode()">Send Verify code</button>
-        <p id="VerifyMsg"></p>
-                <input type="submit" class="fadeIn fourth" value="Sign Up" />
-      </form>
+        placeholder="rePassword"  />
+                <input type="submit" onclick="reFresh()"class="fadeIn fourth" value="Sign Up" />
+              </form>
       <!-- Remind Password -->
     </div>
   </div>
-  <script src="/public/js/register.js">
-
+      <div class="body">
+        <div class="loader "></div>
+      </div>
+  <script src="/public/js/register.js"></script>
+  <script src="/public/js/main.js"></script>
   </script>
 </body>
 

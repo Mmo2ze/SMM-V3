@@ -20,6 +20,7 @@ import cors from 'cors';
 app.use(express.urlencoded({ extended: false }));
 app.use(sessionMiddleware);
 app.set('view engine', 'ejs')
+
 app.use("/public", express.static(__dirname + "/public"));
 app.use(express.static("views"));
 app.use('/api', apiRoute)
@@ -69,6 +70,8 @@ io.on("connection", (socket:any) => {
             socket.emit('error', { id: 'email', error: 'Email already exists' });
         }
         else socket.emit('success', { id: 'email', msg: 'Email is validate' });
+    })
+    socket.on('singUp', async (data: any) => {
     })
     socket.on('sendCode', async (email: any) => {
         const emailFound = await db.User.findOne({ where: { email: email } })

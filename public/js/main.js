@@ -1,12 +1,28 @@
 
-    JsBarcode('#barcode', 'data', {
+// JsBarcode('#barcode', 'data', {
 
-        background: '#fff',
+//     background: '#fff',
 
-        color: '#000',
+//     color: '#000',
 
-        height: 100,
+//     height: 100,
 
-        displayValue: false
+//     displayValue: false
 
-    })
+// })
+    let olvs = document.querySelector(".loader");
+const reFresh = () => {
+    console.log("Laith: Loading");
+    olvs.style.display = "block";
+    // setTimeout (() => {
+    //     olvs.style.display = "none"
+    // }, 2000);
+    // time = 4
+    // const downloadTimer = setInterval(() => {
+    //     if (time <= 0) {
+    //         olvs.style.display = "none";
+    //         clearInterval(downloadTimer);
+    //     }
+    //     time -= 1;
+    // }, 1000)
+}
