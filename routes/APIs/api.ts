@@ -50,7 +50,7 @@ api.post('/sendcode', isAdmin, async (req: any, res: any) => {
 })
 api.post('/resendcode', (req: any, res: any) => {
     console.log('code resended: ' + req.body.code)
-    
+
     const mail_config = {
         from: 'smmzigzag@gmail.com',
         to: req.body.email,
@@ -74,6 +74,22 @@ api.get('/test', async (req: any, res: any) => {
         })
     res.json(request.data)
 })
+
+
+
+
+
+
+api.get('/:url', (req: any, res: any) => {
+    res.render(`${req.params.url}.ejs`,
+        {
+            msg: '', 
+            email: '',
+            status : false
+        })
+})
+
+
 export default api
 
 
