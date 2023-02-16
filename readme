@@ -1,4 +1,4 @@
-$ npm i 
 $ npm i typescript -D 
-$ npx sequelize db:migrate:undo
+$ npm i 
+$ npx sequelize db:migrate
 $ npm run dev
