@@ -20,12 +20,14 @@
             <!-- Register  Form -->
 
             <form action="getCode" method="POST">
+                <p> <%=msg%></p>
                 <h2>
-                    Please Enter code sent to  <%=email%>
+                      <%=email%>
                 </h2>
                 <input type="text" id="code" class="fadeIn second" name="code" placeholder="code" required />
                 <p id="Timer" style="display: none;"></p>
                 <input type="submit" class="fadeIn fourth" value="OK" />
+                <>
             </form>
 
             <!-- Remind Password -->

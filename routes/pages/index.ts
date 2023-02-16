@@ -50,44 +50,58 @@ type status = {
 }
 
 index.post('/register', async (req: any, res: Response) => {
-    var registerR: registerR = (await checkInput(req.body))
-    if (registerR.status) {
-        let responseMsg = await axios.post('http://localhost:8000/api/sendcode', { email: req.body.email, admin: process.env.adminKey, subject: 'verifyCode' })
-        console.log(responseMsg.data)
+    if (req.session?.register?.verifyCode && req.session.register.email == req.body.email) {
+        const responseMsg = await axios.post('http://localhost:8000/api/resendcode', { email: req.session.user.regist.email, admin: process.env.adminKey, subject: 'verifyCode', code: req.session.register.verifyCode })
         if (responseMsg.data.status) {
-            req.session.register = req.body;
-            req.session.register.verifyCode = responseMsg.data.code;
-            let x = setInterval(() => {
-                console.log('done')
-                if (!req.session.isLogin) {
-                    req.session.destroy();
-                }
-                clearInterval(x)
-            }, 1000 * 10) //15 min
-            res.render('getcode.ejs', { email: req.body.email })
+            res.render('getcode.ejs', { msg: 'code sent to ', email: req.body.email })
         }
-        else { res.render('register.ejs', { msg: 'Please try again later ' }) }
+
     } else {
-        res.render('register.ejs', { msg: registerR.error })
+        var registerR: registerR = (await checkInput(req.body))
+        if (registerR.status) {
+            let responseMsg = await axios.post('http://localhost:8000/api/sendcode', { email: req.body.email, admin: process.env.adminKey, subject: 'verifyCode' })
+            console.log(responseMsg.data)
+            if (responseMsg.data.status) {
+                req.session.register = req.body;
+                req.session.register.verifyCode = responseMsg.data.code;
+                req.session.register.try = 0;
+                req.session.cookie.originalMaxAge = 1000 * 60 * 15;//15 mins
+                res.render('getcode.ejs', { msg: 'code sent to ', email: req.body.email })
+            }
+
+            else { res.render('register.ejs', { msg: 'Please try again later ' }) }
+        } else {
+            res.render('register.ejs', { msg: registerR.error })
+        }
+
     }
+
 })
 index.post('/getcode', (req: any, res: Response) => {
-    if (req.session?.register){
-        if (req.session.register.verifyCode == req.body.code) {
-            req.session.isLogin = true;
-            delete req.session.register;
-            res.redirect('/')
-        }else res.render('getcode.ejs', {msg: 'sorry, this code is wrong'})
+    if (req.session?.register) {
+        if (req.session.register.try < 5) {
+            if (req.session.register.verifyCode == req.body.code) {
+                req.session.isLogin = true;
+                req.session.cookie.originalMaxAge = 86400000
+                delete req.session.register;
+                res.redirect('/')
+            } else {
+                req.session.register.try++;
+                res.render('getcode.ejs', { msg: 'sorry, this code is wrong try again', email: req.body.email })
+            }
+        } else {
+            res.render('register.ejs', { msg: 'Sorry you have try too many times please try again' })
+        }
     }
-    else res.render('getcode.ejs', {msg: 'sorry, this code timeout'})
+    else res.render('getcode.ejs', { msg: 'sorry, this code timeout', email: req.body.email })
 })
 index.use(isLogin)
 index.get('/', (req: Request, res: Response) => {
     res.render('neworder')
 })
 index.get('/logout', (req: any, res: Response) => {
-    req.session.destroy()
     console.log(req.session)
+    req.session.destroy()
     res.redirect('/')
 })
 
