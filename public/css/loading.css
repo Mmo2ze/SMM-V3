@@ -4,23 +4,22 @@
   margin: 0;
 
 }
-.body{
-  min-height: 100vh;
-  position: relative;
+.bodyloder{
+  display: none;
 }
 .loader{
 position: absolute;
-top: 50%;
-left: 50%;
-width: 100%;
-height: 100vh;
-display: flex;
-
-transform:translate(-50%,-50%);
-background-color: rgba(255, 255, 255, 0.545);
-z-index: 999999;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transform: translate(-50%,-50%);
+    background-color: rgba(255, 255, 255, 0.545);
+    z-index: 9
 }
-
 .loader::after{
 content: "";
 width: 75px;

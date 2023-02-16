@@ -10,7 +10,7 @@
 //     displayValue: false
 
 // })
-    let olvs = document.querySelector(".loader");
+let olvs = document.querySelector(".bodyloder");
 const reFresh = () => {
     console.log("Laith: Loading");
     olvs.style.display = "block";
