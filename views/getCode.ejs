@@ -20,15 +20,21 @@
             <!-- Register  Form -->
 
             <form action="getCode" method="POST">
-                <p> <%=msg%></p>
+                <p>
+                    <%=msg%>
+                </p>
                 <h2>
-                      <%=email%>
+                    <%=email%>
                 </h2>
                 <input type="text" id="code" class="fadeIn second" name="code" placeholder="code" required />
                 <p id="Timer" style="display: none;"></p>
-                <input type="submit" class="fadeIn fourth" value="OK" />            </form>
+                <input  class="fadeIn second" </input style="display: none;">
+                <input type="submit" class="fadeIn fourth" value="OK" />
+            </form>
 
             <!-- Remind Password -->
+            <script src="/public/js/main.js"/>
+            <script src="/public/js/register.js" />
         </div>
     </div>
 </body>
